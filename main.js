@@ -11,35 +11,34 @@ class Field {
     //might not need lines 12 and 13 since they only find rows and columns which were being used to calc new loc
     this.numOfRows = this.field.length;
     this.numOfColumns = this.field[0].length;
-    this.xCoor = 0;
     this.yCoor = 0;
+    this.xCoor = 0;
   }
   //Returns constructed field map
   print() {
     const fieldMap = this.field.map(arr => arr.join('')).join('\n');
     return fieldMap; 
   }
-  //Calculates new location index based on user input [0][0]
-  move(currentLocationIndex, direction) {  
-    let newLocationIndex = currentLocationIndex;
+  //Returns the element at the proposed new location if it is within bounds
+  move(direction) {  
     if (direction === 'u') {
-      newLocationIndex = currentLocationIndex - (this.numOfColumns + 1);
+      this.yCoor -= 1;
     } else if (direction === 'd') {
-      newLocationIndex = currentLocationIndex + (this.numOfColumns + 1);
+      this.yCoor += 1;
     } else if (direction === 'r') {
-      newLocationIndex = currentLocationIndex + 1;
+      this.xCoor =+ 1;
     } else if (direction === 'l') {
-      newLocationIndex = currentLocationIndex - 1;
+      this.xCoor =- 1;
     }
-    return newLocationIndex;
-  }
-  updateMap(newLocationIndex) {
-    let fieldMap = this.field.print();
-    if (fieldMap[newLocationIndex] === fieldCharacter) {
-      fieldMap.splice(newLocationIndex, 1, pathCharacter);
+    // Check whether location is in bounds ** try..catch error handling may work here aswell
+    if (this.yCoor < 0 || this.yCoor > (this.numOfRows - 1) || this.xCoor < 0 || this.xCoor > (this.numOfColumns - 1)) {
+      console.log('You are out of bounds, please try again.')
+    } else {
+      return this.field[this.yCoor][this.xCoor];
     }
-    return fieldMap;
+    //Changes selected element to path character: this.field[this.xCoor][this.yCoor] = '*';
   }
+  
 }
 
 const myField = new Field([
@@ -48,13 +47,13 @@ const myField = new Field([
   ['░', '^', '░'],
   ['░', 'O', '░']
 ]);
-map = myField.print();
-console.log(map);
-console.log(myField.move(0, 'l'));
+// map = myField.print();
+//console.log(map);
+//console.log(myField.move(0, 'l'));
 //const myMove = myField.move(0, 'd');
 console.log(myField.field);
-console.log(typeof(myField.field));
-console.log(map.findIndex(arr => arr.));
+console.log(myField.move('u'));
+console.log(myField.field);
 
 
 /*currentLocation() {
