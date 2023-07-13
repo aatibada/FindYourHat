@@ -8,7 +8,6 @@ const pathCharacter = '*';
 class Field {
   constructor(twoDimensionalArr) {
     this.field = twoDimensionalArr;
-    //might not need lines 12 and 13 since they only find rows and columns which were being used to calc new loc
     this.numOfRows = this.field.length;
     this.numOfColumns = this.field[0].length;
     this.yCoor = 0;
@@ -19,8 +18,9 @@ class Field {
     const fieldMap = this.field.map(arr => arr.join('')).join('\n');
     return fieldMap; 
   }
-  //Returns the element at the proposed new location if it is within bounds
-  move(direction) {  
+  //Saves new user location 
+  move() { 
+    let direction = prompt('Which direction would you like to move in? ');
     if (direction === 'u') {
       this.yCoor -= 1;
     } else if (direction === 'd') {
@@ -30,57 +30,42 @@ class Field {
     } else if (direction === 'l') {
       this.xCoor =- 1;
     }
-    // Check whether location is in bounds ** try..catch error handling may work here aswell
-    if (this.yCoor < 0 || this.yCoor > (this.numOfRows - 1) || this.xCoor < 0 || this.xCoor > (this.numOfColumns - 1)) {
-      console.log('You are out of bounds, please try again.')
-    } else {
-      return this.field[this.yCoor][this.xCoor];
-    }
-    //Changes selected element to path character: this.field[this.xCoor][this.yCoor] = '*';
   }
-  
+  //Assesses whether proposed user direction results in win, loss, or continued gameplay
+  testLocation() {
+    if (this.yCoor < 0 || this.yCoor > (this.numOfRows - 1) || this.xCoor < 0 || this.xCoor > (this.numOfColumns - 1)) {
+      return 'You are out of bounds, please try again.';
+    }
+    let currentLocationIcon = this.field[this.yCoor][this.xCoor];
+    let result = 'limbo';
+    if (currentLocationIcon === hat) {
+      result = 'Congrats, you found the hat!';
+    } else if (currentLocationIcon === hole) {
+      result = 'Whoops, you fell down a hole, please try again.';
+    } else if (currentLocationIcon === fieldCharacter) {
+      this.field[this.yCoor][this.xCoor] = pathCharacter;
+      result = 'limbo';
+    } 
+    return result;
+  }
+  // Gameplay loop 
+  play() {
+    console.log('Find the hat!');
+    do {
+      console.log(this.print());
+      this.move();
+      this.testLocation();
+    } while (this.testLocation() === 'limbo');
+    //Logs result when game is over
+    console.log(this.testLocation());
+  }
 }
 
 const myField = new Field([
-  ['*', '░', 'O'],
+  ['*', 'O', 'O'],
   ['░', 'O', '░'],
   ['░', '^', '░'],
   ['░', 'O', '░']
 ]);
-// map = myField.print();
-//console.log(map);
-//console.log(myField.move(0, 'l'));
-//const myMove = myField.move(0, 'd');
-console.log(myField.field);
-console.log(myField.move('u'));
-console.log(myField.field);
 
-
-/*currentLocation() {
-  switch (loc) {
-    case hat: 
-      console.log('Congrats, You found the hat!');
-      break;
-    case hole:
-      console.log('Whoops, you fell down a hole, please try again.');
-      break;
-    case fieldCharacter:
-      this.move();
-      break;
-    case pathCharacter:
-      console.log('You have already visited this space, please try again');
-      break;
-    default:
-      console.log('You are out of bounds, please try again.');
-  }
-}
-move() {
-  let map = myField.print();
-  let direction = prompt('Which way would you like to go? ');
-  if (direction === r || direction === R) {
-    
-  }
-}
-gamePlay() {
-
-}*/
+myField.play();
