@@ -22,6 +22,6 @@ This game is meant to be played in the terminal and requires the installation of
 **Once node has been installed, please continue with the following directions:**
 
 1. Download the "main.js" file to your preferred location on your computer
-2. Open the terminal and change your directiory to the folder "main.js" is saved under
+2. Open the terminal and change your directiory to the location "main.js" is saved under
 3. Run the command "node main.js" to start the game
 4. Enjoy! 😁
