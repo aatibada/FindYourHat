@@ -20,7 +20,8 @@ class Field {
   }
   //Saves new user location 
   move() { 
-    let direction = prompt('Which direction would you like to move in? ').toLowerCase();
+    console.log('Which direction would you like to move in?')
+    let direction = prompt(`Type "U" for up, "D" for down, "L" for left, or "R" for right: `).toLowerCase();
     if (direction === 'u') {
       this.yCoor -= 1;
     } else if (direction === 'd') {
@@ -93,5 +94,4 @@ class Field {
 }
 
 const myField = new Field(Field.generateField(6, 6, .3));
-
 myField.play();
