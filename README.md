@@ -16,4 +16,12 @@ For further instruction on the gameplay, please read the following:
 - As the user moves through the maze, their location will be updated with the path charater
 - Field characters can be freely moved on to navigate the maze
 
-**I hope you enjoy playing! 😁**
+### Needed Technologies
+This game is meant to be played in the terminal and requires the installation of node. Therefore, if you do not have node installed, please [click here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) for directions on how to do so. 
+
+**Once node has installed, please review the following directions:**
+
+1. Download the GitHub files to the preferred location on your computer
+2. Open the terminal and navigate to the file location
+3. Run the command "node main.js" to start the game
+4. Enjoy! 😁
